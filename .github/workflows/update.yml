@@ -1,0 +1,24 @@
+name: Fetch Single File
+
+on:
+  schedule:
+    - cron: '0 */6 * * *' 
+  workflow_dispatch:     
+
+jobs:
+  download:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout thy repo
+        uses: actions/checkout@v4
+
+      - name: Download the file
+        run: |
+          curl -s "${{ secrets.SOURCE_URL }}" -o links.txt
+
+      - name: Commit and Push
+        run: |
+          git config --global user.name 'UpdateBot'
+          git config --global user.email 'bot@github.com'
+          git add links.txt
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Update list" && git push)
