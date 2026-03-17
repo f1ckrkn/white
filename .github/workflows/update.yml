@@ -14,7 +14,7 @@ jobs:
 
       - name: Download the file
         run: |
-          curl -s "${{ secrets.SOURCE_URL }}" -o links.txt
+          curl -s "${{ secrets.WHITE_LIST }}" -o links.txt
 
       - name: Commit and Push
         run: |
